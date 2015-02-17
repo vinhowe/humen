@@ -1,4 +1,4 @@
-package com.dc0d.experiments.peoplesim;
+package com.dc0d.humen;
 
 public enum Lineage {
 	CAUCASIAN,

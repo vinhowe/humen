@@ -8,14 +8,17 @@ public class Male extends Human {
 	
 	public Male(World world, String name, Male father, Female mother) {
 		super(world, name, father, mother);
-		surname = father.surname;
-		race = Math.random() < 0.5 ? father.race : mother.race;
+		this.name = name;
 	}
 	
 	public Male(World world, Male father, Female mother) {
 		super(world, world.maleNames.get(new Random().nextInt(world.maleNames.size())), father, mother);
-		surname = father.surname;
-		race = Math.random() < 0.5 ? father.race : mother.race;
+		name = world.maleNames.get(new Random().nextInt(world.maleNames.size()));
+	}
+	
+	public Male(World world) {
+		super(world);
+		name = world.maleNames.get(new Random().nextInt(world.maleNames.size()));
 	}
 	
 	@Override
@@ -25,15 +28,19 @@ public class Male extends Human {
 			dead = true;
 		}
 		double rand = Math.random();
-		if(rand < 0.1) {
+		if(rand < 0.1 && age >= 22) {
 			if(!married) {
-				marry(world.getRandomFemale());
+				marry(world.getRandomFemale(true));
 			}
 		}
 	}
 	
 	public void marry(Female bride) {
-		bride.marry(this);
-		spouse = bride;
+		if(bride != null) {
+			if(bride.marry(this)){
+				spouse = bride;
+				married = true;
+			}
+		}
 	}
 }

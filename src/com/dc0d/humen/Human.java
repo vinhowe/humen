@@ -1,44 +1,53 @@
 package com.dc0d.humen;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 abstract class Human {
 	short age;
 	short height;
-	Lineage lineage;
 	World world;
 	String name;
 	String surname;
 	String race;
 	String eyeColor;
 	String hairColor;
-	boolean married;
+	boolean married = false;
 	short deathAge;
 	Male father;
 	Female mother;
 	boolean dead;
+	Traits traits;
+	int extraversion;
+	int aggression;
+	int health;
+	ArrayList<Human> friends = new ArrayList<Human>();
 	
 	public Human(World world, String name, Male father, Female mother) {
 		this.world = world;
-		surname = world.surnames.get(new Random().nextInt(world.maleNames.size()));
-		race = world.races.get(new Random().nextInt(world.races.size()));
-		eyeColor = world.eyeColors.get(new Random().nextInt(world.eyeColors.size()));
-		hairColor = world.hairColors.get(new Random().nextInt(world.hairColors.size()));
+		surname = father.surname;
+		eyeColor = Math.random() > 0.5 ? father.race : mother.race;
+		eyeColor = Math.random() > 0.5 ? father.eyeColor : mother.eyeColor;
+		hairColor = Math.random() > 0.5 ? father.hairColor : mother.hairColor;
 		deathAge = (short) (new Random().nextInt(20)+80);
 		age = 0;
-		surname = father.surname;
+		world.totalPopulationCounter++;
+		traits = new Traits();
+		extraversion = (int) ((Math.random() * 200) -100);
 	}
 	
-	/*public Human(World world) {
+	public Human(World world) {
 		this.world = world;
-		surname = world.surnames.get(new Random().nextInt(world.maleNames.size()));
+		surname = world.surnames.get(new Random().nextInt(world.maleNames.size()-1));
 		race = world.races.get(new Random().nextInt(world.races.size()));
-		eyeColor = world.eyeColors.get(new Random().nextInt(world.eyeColors.size()));
-		hairColor = world.hairColors.get(new Random().nextInt(world.hairColors.size()));
+		eyeColor = world.eyeColors.get(new Random().nextInt(world.eyeColors.size()-1));
+		hairColor = world.hairColors.get(new Random().nextInt(world.hairColors.size()-1));
 		deathAge = (short) (new Random().nextInt(20)+80);
 		age = 0;
-		surname = father.surname;
-	}*/
+		world.totalPopulationCounter++;
+		traits = new Traits();
+		extraversion = (int) ((Math.random() * 200) -100);
+	}
 	
 	public void logAttributes() {
 		String sex;
